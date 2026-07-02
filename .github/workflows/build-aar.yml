@@ -18,29 +18,14 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
 
-      - name: Install Android SDK
-        run: |
-          mkdir -p $HOME/android-sdk/cmdline-tools
-          curl -sL https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -o cmdline.zip
-          unzip -q cmdline.zip -d $HOME/android-sdk/cmdline-tools/
-          mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
-          echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
-          echo "$HOME/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
-          yes | sdkmanager --sdk_root=$HOME/android-sdk "platforms;android-31" "build-tools;31.0.0" > /dev/null 2>&1
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Build AAR
         run: |
           cd nativeplugins/WoxuFlvAudio
-          # 使用 gradle wrapper 或系统 gradle
-          if [ ! -f gradlew ]; then
-            apt-get update -qq && apt-get install -y -qq gradle 2>/dev/null || true
-            gradle wrapper 2>/dev/null || true
-          fi
-          if [ -f gradlew ]; then
-            chmod +x gradlew && ./gradlew :lib:assembleRelease
-          else
-            gradle :lib:assembleRelease
-          fi
+          gradle wrapper --gradle-version=7.5
+          ANDROID_HOME=/usr/local/lib/android/sdk ./gradlew :lib:assembleRelease
 
       - name: Upload AAR
         uses: actions/upload-artifact@v4
