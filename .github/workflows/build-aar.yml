@@ -21,7 +21,7 @@ jobs:
 
       - name: Build AAR
         run: |
-          gradle wrapper --gradle-version=7.5
+          gradle wrapper --gradle-version=8.4
           ANDROID_HOME=/usr/local/lib/android/sdk ./gradlew :lib:assembleRelease
 
       - name: Upload AAR
