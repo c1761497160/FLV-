@@ -21,8 +21,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Build AAR
+      - name: Debug and Build AAR
         run: |
+          ls -la
+          ls -la nativeplugins/ 2>/dev/null || echo "no nativeplugins dir"
           cd nativeplugins/WoxuFlvAudio
           gradle wrapper --gradle-version=7.5
           ANDROID_HOME=/usr/local/lib/android/sdk ./gradlew :lib:assembleRelease
