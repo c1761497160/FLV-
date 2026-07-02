@@ -1,0 +1,21 @@
+{
+	"name": "WoxuFlvAudio",
+	"id": "WoxuFlvAudio",
+	"version": "1.0.0",
+	"description": "FLV 音频解码插件（Android 原生 AAC/PCM 解码）",
+	"_dp_type": "nativeplugin",
+	"_dp_nativeplugin": {
+		"android": {
+			"plugins": [
+				{
+					"type": "module",
+					"name": "WoxuFlvAudio",
+					"class": "com.woxu.flvaudio.WoxuFlvAudioModule"
+				}
+			],
+			"integrateType": "aar",
+			"minSdkVersion": 21,
+			"abis": ["arm64-v8a", "armeabi-v7a", "x86_64"]
+		}
+	}
+}
